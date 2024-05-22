@@ -52,6 +52,9 @@ android {
 }
 
 dependencies {
+    //constraint layout
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13")
+    implementation(libs.androidx.material3.android)
     //implementation(libs.androidx.ui.text.google.fonts)
     //navigation
     val nav_version = "2.7.7"
@@ -87,6 +90,11 @@ dependencies {
     val room_version = "2.6.1"
     implementation ("androidx.room:room-runtime:$room_version")
     annotationProcessor ("androidx.room:room-compiler:$room_version")
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
@@ -108,7 +116,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    //implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

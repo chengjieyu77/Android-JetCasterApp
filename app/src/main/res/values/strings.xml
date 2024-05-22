@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">JetcasterMe</string>
+    <string name="play_icon">play icon</string>
+    <string name="add_playlist_icon">add playlist icon</string>
+    <string name="more_vert_icon">more info icon</string>
+    <string name="add_album_to_library">add album to your library icon</string>
+
+    <string name="tab0">Your library</string>
+    <string name="tab1">Discover</string>
 </resources>
