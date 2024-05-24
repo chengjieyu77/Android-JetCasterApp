@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    // Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     //constraint layout
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13")
     implementation(libs.androidx.material3.android)
@@ -94,6 +96,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
+    // optional - RxJava2 support for Room
+    implementation("androidx.room:room-rxjava2:$room_version")
 
 
     // Coroutines

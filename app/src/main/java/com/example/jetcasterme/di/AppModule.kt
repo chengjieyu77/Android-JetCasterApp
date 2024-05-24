@@ -2,6 +2,9 @@ package com.example.jetcasterme.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.jetcasterme.data.AlbumDao
+import com.example.jetcasterme.data.AudioDao
+import com.example.jetcasterme.data.CollectionNameDao
 import com.example.jetcasterme.data.JetcasterDatabase
 import com.example.jetcasterme.data.JetcasterDatabaseDao
 import dagger.Module
@@ -14,10 +17,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)//one source of truth
 @Module
 object AppModule {
-    @Singleton
-    @Provides
-    fun providesJetcasterDao(jetcasterDatabase: JetcasterDatabase):JetcasterDatabaseDao
-        = jetcasterDatabase.jetcasterDao()
 
     @Singleton
     @Provides
@@ -28,4 +27,26 @@ object AppModule {
             "jetcaster_db"
         ).fallbackToDestructiveMigration()
         .build()
+
+    @Singleton
+    @Provides
+    fun providesJetcasterDao(jetcasterDatabase: JetcasterDatabase):JetcasterDatabaseDao
+            = jetcasterDatabase.jetcasterDao()
+
+//    @Singleton
+//    @Provides
+//    fun providesAudioDao(jetcasterDatabase: JetcasterDatabase):AudioDao
+//            = jetcasterDatabase.audioDao()
+//
+//    @Singleton
+//    @Provides
+//    fun providesCollectionNameDao(jetcasterDatabase: JetcasterDatabase):CollectionNameDao
+//            = jetcasterDatabase.collectionNameDao()
+//
+//    @Singleton
+//    @Provides
+//    fun providesAlbumDao(jetcasterDatabase: JetcasterDatabase): AlbumDao
+//            = jetcasterDatabase.albumDao()
+
+
 }

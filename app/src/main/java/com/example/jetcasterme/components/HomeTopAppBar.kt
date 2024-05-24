@@ -33,7 +33,8 @@ import com.example.jetcasterme.R
 fun JetcasterTopAppBar(
     modifier: Modifier = Modifier,
     containerColor: Color =  Color(0xFF1D1913),
-    height: Dp = 120.dp
+    height: Dp = 120.dp,
+    onNavToProfile:()->Unit = {}
 ) {
     Box {
         Box(modifier = modifier
@@ -48,7 +49,7 @@ fun JetcasterTopAppBar(
                         contentDescription = "search icon",
                         tint = Color.LightGray.copy(0.6f))
                 }
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick =  onNavToProfile ) {
                     Icon(imageVector = Icons.Default.AccountCircle,
                         contentDescription = "account icon",
                         tint = Color.LightGray.copy(0.6f))

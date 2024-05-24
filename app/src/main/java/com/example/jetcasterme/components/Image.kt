@@ -19,7 +19,7 @@ import dagger.Component
 @Composable
 fun JetcasterImage(
     modifier:Modifier = Modifier,
-    imageUrl:String,
+    imageUrl:String?,
     description:String,
     size: Dp
 ){

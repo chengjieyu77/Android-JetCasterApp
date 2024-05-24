@@ -6,21 +6,26 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.jetcasterme.model.Audio
+import java.util.concurrent.Flow
 
 @Dao
 interface AudioDao {
+//    @Query("SELECT * FROM audios_tbl")
+//    fun getAllAudios():Flow<List<Audio>>
+//
+//    @Query("SELECT * FROM audios_tbl WHERE album_name =:album")
+//    fun findAudiosByAlbum(album:String):Flow<List<Audio>>
     @Query("SELECT * FROM audios_tbl")
-    suspend fun getAllAudios():List<Audio>
-
-    @Query("SELECT * FROM audios_tbl WHERE album_name =:album")
-    suspend fun findAudiosByAlbum(album:String):List<Audio>
+    fun getAllAudios(): kotlinx.coroutines.flow.Flow<List<Audio>>
 
     @Insert
-    fun insertAudio(audio: Audio)
+    suspend fun insertAudio(audio: Audio)
 
     @Update
-    fun updateAudio(audio: Audio)
+    suspend fun updateAudio(audio: Audio)
 
     @Delete
-    fun deleteAll()
+    suspend fun deleteAllAudios(audio:Audio)
+
+
 }
