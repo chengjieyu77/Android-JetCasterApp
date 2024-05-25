@@ -32,6 +32,9 @@ class JetcasterRepository @Inject constructor(private val jetcasterDatabaseDao: 
      suspend fun deleteAudio(audio: Audio)
              = jetcasterDatabaseDao.deleteAudio(audio)
 
+     fun getAllAudios()
+     =jetcasterDatabaseDao.getAllAudios()
+
      //album
      suspend fun addAlbum(album: Album)
      = jetcasterDatabaseDao.insertAlbum(album)

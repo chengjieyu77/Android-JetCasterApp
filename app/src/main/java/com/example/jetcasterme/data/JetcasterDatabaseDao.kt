@@ -58,17 +58,19 @@ interface JetcasterDatabaseDao {
 
 
     //relate to two tables
-    @Query("SELECT audios_tbl.audio_count AS audioCount, audios_tbl.audio_name As audioName, audios_tbl.album_name As albumName, " +
-            "audios_tbl.release_time As releaseTime, audios_tbl.play_length As playLength, albums_tbl.album_image As albumImage "+
+    @Query("SELECT audios_tbl.id As id, audios_tbl.audio_count AS audioCount, audios_tbl.audio_name As audioName, audios_tbl.album_name As albumName, " +
+            "audios_tbl.release_time As releaseTime, audios_tbl.play_length As playLength, audios_tbl.media_url As url , albums_tbl.album_image As albumImage "+
             "FROM audios_tbl,albums_tbl " +
             "WHERE audios_tbl.album_name = albums_tbl.album_name")
     fun getAllPlayAudios(): Flow<List<PlayAudio>>
 
-    @Query("SELECT audios_tbl.audio_count AS audioCount, audios_tbl.audio_name As audioName, audios_tbl.album_name As albumName, " +
-            "audios_tbl.release_time As releaseTime, audios_tbl.play_length As playLength, albums_tbl.album_image As albumImage "+
+    @Query("SELECT audios_tbl.id As id,audios_tbl.audio_count AS audioCount, audios_tbl.audio_name As audioName, audios_tbl.album_name As albumName, " +
+            "audios_tbl.release_time As releaseTime, audios_tbl.play_length As playLength, audios_tbl.media_url As url,albums_tbl.album_image As albumImage "+
             "FROM audios_tbl,albums_tbl " +
             "WHERE audios_tbl.album_name =:albumName AND albums_tbl.album_name =:albumName")
     fun getPlayAudiosByAlbum(albumName: String):Flow<List<PlayAudio>>
+
+
 
 //    @Query("SELECT audios_tbl.audio_count AS audioCount, audios_tbl.audio_name As audioName, audios_tbl.album_name As albumName, " +
 //            "audios_tbl.release_time As releaseTime, audios_tbl.play_length As playLength, albums_tbl.album_image As albumImage "+

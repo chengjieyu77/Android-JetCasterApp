@@ -32,6 +32,7 @@ class HomeScreenViewmodel @Inject constructor(private val repository: JetcasterR
     private val _allPlayAudios = MutableStateFlow<List<PlayAudio>>(emptyList())
     private val _playAudiosFilteredByCollectionName = mutableStateListOf<PlayAudio>()
     private val _playAudiosFilteredByAlbum = MutableStateFlow<List<PlayAudio>>(emptyList())
+    private val _playAudiosInLibrary = mutableStateListOf<PlayAudio>()
 
     val tabState
         get() = _tabState
@@ -51,6 +52,9 @@ class HomeScreenViewmodel @Inject constructor(private val repository: JetcasterR
 
     val playAudioFilteredByCollectionName:List<PlayAudio>
         get() = _playAudiosFilteredByCollectionName
+
+    val playAudioInYourLibrary:List<PlayAudio>
+        get() = _playAudiosInLibrary.toList()
 
     init {
         viewModelScope.launch {
@@ -98,8 +102,11 @@ class HomeScreenViewmodel @Inject constructor(private val repository: JetcasterR
     fun onAlbumResponse(selected:Boolean,album: Album){
         if (selected){
             _selectedAlbums.add(album)
+            addPlayVideosInYourLibraryByAlbum(album.albumName!!)
+
         }else{
             _selectedAlbums.remove(album)
+            removePlayVideosInYourLibraryByAlbum(album.albumName!!)
         }
     }
 
@@ -123,9 +130,23 @@ class HomeScreenViewmodel @Inject constructor(private val repository: JetcasterR
         }
     }
 
-    fun getPlayAudiosByAlbum(albumName:String) = viewModelScope.launch {
+    private fun getPlayAudiosByAlbum(albumName:String) = viewModelScope.launch {
         repository.getPlayAudiosByAlbum(albumName).collect{listOfPlayAudio->
             _playAudiosFilteredByAlbum.value = listOfPlayAudio
+        }
+    }
+
+    private fun addPlayVideosInYourLibraryByAlbum(albumName:String) = viewModelScope.launch {
+        repository.getPlayAudiosByAlbum(albumName).collect{listOfPlayAudios->
+            _playAudiosInLibrary.addAll(listOfPlayAudios)
+
+        }
+    }
+
+    private fun removePlayVideosInYourLibraryByAlbum(albumName:String) = viewModelScope.launch {
+        repository.getPlayAudiosByAlbum(albumName).collect{listOfPlayAudios->
+            _playAudiosInLibrary.removeAll(listOfPlayAudios)
+
         }
     }
 

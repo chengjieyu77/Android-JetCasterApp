@@ -24,11 +24,13 @@ fun DatabaseOperationScreen(navController: NavHostController,
             //add audio
             Button(onClick = {
                 viewModel.addAudio(
-                    Audio(uid = 4, audioCount = 830,
-                        audioName = "Can You Be Too Nice?",
+                    Audio(uid = 1, audioCount = 830,
+                        audioName = "The Forever Trial",
                         albumName = "No Stupid Questions",
                         releaseTime = "May 12,2024",
-                        playLength = 38)
+                        playLength = 38,
+                        mediaUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                        collectionName = "Society & Culture")
                 )
             },
                 modifier = modifier.padding(top = 120.dp)) {
@@ -40,8 +42,8 @@ fun DatabaseOperationScreen(navController: NavHostController,
                 viewModel.addAlbum(
                     Album(uid = 4,
                         albumImage = "https://images.unsplash.com/photo-1713364471261-e7d93cca2386?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOHx8fGVufDB8fHx8fA%3D%3D",
-                        albumName = "Plant Money",
-                        collectionName = "News")
+                        albumName = "No Stupid Questions",
+                        collectionName = "Society & Culture")
                 )
             },
                 modifier = modifier.padding(top = 60.dp)) {
@@ -51,7 +53,7 @@ fun DatabaseOperationScreen(navController: NavHostController,
             //add collection name
             Button(onClick = {
                 viewModel.addCollectionName(
-                    CollectionName(uid = 5, collectionName = "Health & Fitness")
+                    CollectionName(uid = 5, collectionName = "Society & Culture")
                 )
             },
                 modifier = modifier.padding(top = 60.dp)) {

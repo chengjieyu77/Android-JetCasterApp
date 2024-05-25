@@ -9,7 +9,7 @@ import com.example.jetcasterme.model.CollectionName
 
 
 @Database(entities = [Audio::class, Album::class, CollectionName::class],
-    version = 3, exportSchema = false)
+    version = 5, exportSchema = false)
 abstract class JetcasterDatabase : RoomDatabase(){
     abstract fun jetcasterDao():JetcasterDatabaseDao
 //    abstract fun audioDao():AudioDao

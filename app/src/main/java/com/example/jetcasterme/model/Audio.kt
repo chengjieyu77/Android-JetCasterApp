@@ -14,7 +14,8 @@ data class Audio(
     @ColumnInfo(name = "release_time") val releaseTime:String,
     @ColumnInfo(name = "play_length") val playLength:Int,
     @ColumnInfo(name = "album_name") val albumName:String,
-    //@ColumnInfo(name="collection_name") val collectionName: String?
+    @ColumnInfo(name = "media_url") val mediaUrl:String,
+    @ColumnInfo(name="collection_name") val collectionName: String?
 )
 
 

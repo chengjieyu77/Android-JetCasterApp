@@ -78,6 +78,7 @@ import com.example.jetcasterme.model.Audio
 import com.example.jetcasterme.model.CollectionName
 import com.example.jetcasterme.model.PlayAudio
 import com.example.jetcasterme.navigation.JetcasterMeScreens
+import com.example.jetcasterme.screen.audio.AudioScreenViewModel
 
 import com.example.jetcasterme.ui.theme.JetcasterMeTheme
 import kotlinx.coroutines.flow.forEach
@@ -97,6 +98,7 @@ private const val  TAG = "HomeScreen"
 fun HomeScreen(navController: NavController,
                modifier: Modifier = Modifier,
                viewmodel: HomeScreenViewmodel = hiltViewModel(),
+               //audioviewModel: AudioScreenViewModel = hiltViewModel(),
                onClickToAudioDetail: (String) -> Unit) {
     val tabState = rememberSaveable{
         mutableIntStateOf(1)
@@ -106,9 +108,11 @@ fun HomeScreen(navController: NavController,
     val allPlayAudiosList = viewmodel.allPlayAudios.collectAsState().value
     //val displayedPlayAudiosList = viewmodel.playAudioFilteredByCollectionName.toList()
     val selectedAlbums = viewmodel.selectedAlbums
+    val playAudiosInYourLibrary = viewmodel.playAudioInYourLibrary
     Log.d(TAG,albumsList.toString())
     Log.d(TAG,allPlayAudiosList.toString())
     //Log.d(TAG,displayedPlayAudiosList.toString())
+    Log.d(TAG, "playAudiosInYourLibrary"+playAudiosInYourLibrary.toString())
 
 
 
@@ -145,8 +149,17 @@ fun HomeScreen(navController: NavController,
 
                         TabsRow(tabState = viewmodel.tabState,
                             isAlbumEmpty = viewmodel.selectedAlbums.isEmpty()){scroll.value}
+
                         when(viewmodel.tabState.intValue){
-                            0 -> Text(text = "this is library", color = Color.White)
+                            0 -> Column {
+                                viewmodel.playAudioInYourLibrary.forEach { playAudio ->
+                                    PlayAudioItem(audio = playAudio){audioName->
+                                        navController.navigate(JetcasterMeScreens.AudioScreen.name+"/$audioName")
+                                        //audioviewModel.setCurrentPlayAudioName(audioName)
+                                    }
+                                    HorizontalDivider()
+                                }
+                            }
                             1 -> Column(modifier = modifier
                                 .padding(horizontal = 16.dp)
                                 //.verticalScroll(scroll)
@@ -166,6 +179,8 @@ fun HomeScreen(navController: NavController,
                                 allPlayAudiosList.forEach {playAudio ->
                                     PlayAudioItem(audio = playAudio){audioName->
                                         navController.navigate(JetcasterMeScreens.AudioScreen.name+"/$audioName")
+                                        //audioviewModel.setCurrentPlayAudioName(audioName)
+
                                     }
                                     HorizontalDivider()
                                 }
@@ -325,11 +340,16 @@ fun TabsRow(
 ){
     //var state by remember { mutableStateOf(0) }
 
-    val minTabOffset = with(LocalDensity.current){56.dp.toPx()}
-    val maxTabOffset = with(LocalDensity.current){ 100.dp.toPx()}
+    val minTabOffset = with(LocalDensity.current){100.dp.toPx()}
+    val maxTabOffset = with(LocalDensity.current){ 150.dp.toPx()}
 
     val titles = listOf(stringResource(id = R.string.tab0),
         stringResource(id = R.string.tab1))
+    val scroll = scrollProvider()
+    val newOffset = if (scroll > -250) 0 else scroll
+    val newOffsetState = remember {
+        mutableIntStateOf(newOffset)
+    }
     Column(
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
@@ -337,10 +357,11 @@ fun TabsRow(
             .fillMaxWidth()
             //.statusBarsPadding()
             .offset {
-                val scroll = scrollProvider()
-                val offset = if(isAlbumEmpty) scroll else 0 //- scroll).coerceAtLeast(minTabOffset)
-                IntOffset(x = 0,y=offset.toInt())
-        }
+
+                val offset =
+                    if (isAlbumEmpty) scroll else newOffsetState.value//(0).coerceAtMost(scroll)// (scroll - ).coerceAtLeast(minTabOffset)
+                IntOffset(x = 0, y = offset.toInt())
+            }
             .background(color = Color.Black),
     ) {
         PrimaryTabRow(
@@ -700,7 +721,9 @@ private fun AudioItemPreview(){
         PlayAudio(
             audioCount = 196, audioName = "What's Wrong With Being a Little Neurotic?",
             albumName = "No Stupid Life", releaseTime = "May 19,2024", playLength = 30,
-            albumImage = "https://cdn.pixabay.com/photo/2023/06/16/15/14/sunset-8068208_1280.jpg"
+            albumImage = "https://cdn.pixabay.com/photo/2023/06/16/15/14/sunset-8068208_1280.jpg",
+            id = 1,
+            url = ""
         )
     ){
 
@@ -734,6 +757,8 @@ val fakeAudioList = listOf(
         Audio(uid = 1, audioCount = 196,
             audioName = "What's Wrong With Being a Little Neurotic?",
             albumName = "No Stupid Life", releaseTime = "May 19,2024",
-            playLength = 30)
+            playLength = 30,
+            mediaUrl = "",
+            collectionName = "Society & Culture")
         )
 
